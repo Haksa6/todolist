@@ -1,0 +1,15 @@
+.menu{
+  list-style: none;
+  &-item{
+    cursor: pointer;
+    padding: 1rem;
+    transition: all 0.5s ease;
+
+  
+  &:hover{
+    color: $blue-dark;
+    font-weight: 700;
+    transform: translateX(.5rem);
+  }
+  }
+}
