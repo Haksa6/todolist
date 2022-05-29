@@ -1,3 +1,4 @@
+//sidebar styles
 .menu{
   list-style: none;
   &-item{
@@ -11,5 +12,17 @@
     font-weight: 700;
     transform: translateX(.5rem);
   }
+  }
+}
+
+.sidebar-button-new{
+  height: 5rem;
+  width: 5rem;
+  font-size: 3rem;
+  border-radius: 50%;
+  align-self: center;
+  &:hover{
+    transition: ease-in 0.7s;
+    box-shadow: inset 5rem 0 0 0 $blue-light;
   }
 }
