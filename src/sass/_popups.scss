@@ -8,12 +8,10 @@
   z-index: 1;
   transition: all 0.3s ease;
   background-color: rgba(0, 0, 0, 0.8);
-  top: 0;
-  left: 0;
 
-  &-hidden{
-    display: none;
-  }
+}
+.hidden{
+  display: none;
 }
 
 //pop up form to add a new one
@@ -22,6 +20,8 @@
   width: 40rem;
   background-color: $blue;
   border-radius: 5px;
+  top: -50%;
+  transition: all 0.3s ease;
   box-shadow: 15px 15px rgba(0,0,0,0.3);
   &-header-container{
     background-color: $green-blue;
@@ -81,6 +81,9 @@
       width: 7rem;
       align-self: end;
       margin-right: 0.5rem;
+      &:hover{
+        box-shadow: inset 8rem 0 0 0 $blue-light;
+      }
     }
   }
 }

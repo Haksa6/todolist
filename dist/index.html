@@ -7,20 +7,19 @@
   <title>HAKSA TODOLIST</title>
 </head>
 <body>
-  <div class="popup-new-hidden">
+  <div class="popup-new hidden">
       <form class="make-new">
         <div class="make-new-header-container">
           <div class="make-new-header-container-theheader">Make a new todo</div>
           <span class="make-new-header-container-xButton">X</span>
         </div>
         <div class="make-new-info-container">
-          <input maxlength="40" type="text" class="make-new-info-container-input-title" placeholder="Todo title here">
+          <input maxlength="40" type="text" class="make-new-info-container-input-title" placeholder="Todo title here" id="make-new-title">
           <div class="make-new-info-container-date-container">
             <p class="make-new-info-container-date-container-para">Due date:</p>
-            <input type="date" class="make-new-info-container-date-container-input-date">
+            <input type="date" class="make-new-info-container-date-container-input-date" id="make-new-date">
           </div>
           <button class="make-new-info-container-button">ADD</button>
-
         </div>
       </form>
   </div>
@@ -28,24 +27,26 @@
 
 
   <header class="header">
-    <div class="header-container">
-      <p>TODOLIST</p>
+    <p class="header-text">TODOLIST</p>
+    <div class="hamburger">
+      <span class="line"></span>
+      <span class="line"></span>
+      <span class="line"></span>
     </div>
   </header>
   <nav class="sidebar">
     <ul class="menu">
-      <li class="menu-item">Home</li>
+      <li class="menu-item highlighted">Home</li>
       <li class="menu-item">Today</li>
       <li class="menu-item">Week</li>
-      <li class="menu-item">Month</li>
+      <li class="menu-item">Month+</li>
     </ul>
     <button class="sidebar-button-new">+</button>
   </nav>
   <main class="main">
-    <div class="todos">
-      <div class="todos-check"> 
-      </div>
-      
+    
+    <!-- <div class="todos">
+      <input type="checkbox" class="todos-input">
       <div class="todos-text">
           Eat your nuts
       </div>
@@ -54,32 +55,7 @@
       </div>
       <button class="todos-edit">Edit</button>
       <button class="todos-delete">Delete</button>
-    </div>
-    <div class="todos">
-      <div class="todos-check"> 
-      </div>
-      <div class="todos-text">
-          Eat your nuts
-      </div>
-      <div class="todos-date">
-        Jan 12th
-      </div>
-      <button class="todos-edit">Edit</button>
-      <button class="todos-delete">Delete</button>
-    </div>
-    <div class="todos">
-      <div class="todos-check"> 
-      </div>
-      
-      <div class="todos-text">
-          Eat your nuts
-      </div>
-      <div class="todos-date">
-        Jan 12th
-      </div>
-      <button class="todos-edit">Edit</button>
-      <button class="todos-delete">Delete</button>
-    </div>
+    </div> -->
   </main>
   <script src="main.js"></script>
 </body>
