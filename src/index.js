@@ -1,23 +1,19 @@
 import './sass/main.scss';
-import './sidebar';
-import { format } from 'date-fns'
+import { toDosManager } from './toDos';
+
+
 const main = document.querySelector(".main");
-const popUpNew = document.querySelector(".popup-new");
-const formNew = document.querySelector(".make-new")
-
-
-
-
-const popCreateNewSubmitButton = document.querySelector(".make-new-info-container-button");
-
 
 // Create new pop screen
+const popUpNew = document.querySelector(".popup-new");
+const formNew = document.querySelector(".make-new")
+const popCreateNewSubmitButton = document.querySelector(".make-new-info-container-button");
 const openPopCreateNewButton = document.querySelector(".sidebar-button-new");
-
-const popUpNewCloseButton = document.querySelector(".make-new-header-container-xButton")
+const popUpNewCloseButton = document.querySelector(".make-new-header-container-xButton");
 
 // The x button to close the pop screen
 popUpNewCloseButton.addEventListener('click', e => {
+  formNew.reset();
   popUpNew.classList.toggle("hidden");
 })
 
@@ -27,184 +23,71 @@ openPopCreateNewButton.addEventListener('click', () => {
   popUpNew.classList.toggle("hidden");
 })
 
-
-// If input check is checked mak echanges to the container
-// const check = document.querySelector(".todos-input");
-// const text = document.querySelector(".todos-text");
-// check.addEventListener('click', () => {
-//   if(check.checked){
-//     text.classList.add("-done");
-//   }else{
-//     text.classList.remove("-done");
-//   }
-// })
+// Submits the new todo
+popCreateNewSubmitButton.addEventListener('click', e => {
+  toDosManager.addToDo(e, todos, main, popUpNew, formNew);
+  console.log("create new pressed");
+});
 
 
 
 
+// Sidebar functions
+const menuItems = document.querySelectorAll(".menu-item");
+const hamburger = document.querySelector(".hamburger");
+const sidebar = document.querySelector(".sidebar");
 
-
-const toDosManager = (function (){
-  let currentState = "today";
-
-  // Get the current state in the sidebar
-  const getState = () => {
-    return currentState;
+  // Toggles active status on the sidebar so you know which page you're on
+  function activeItem(){
+    menuItems.forEach((item)=>item.classList.remove('highlighted'));
+    this.classList.add('highlighted');
   };
-
-  const changeState = (newState) => {
-    currentState = newState;
-  }
-
-  // Delete todo function
-  const deleteToDo = (e, todos, main) => {
-    const item = e.target;
-    console.log(item.parentElement.getAttribute("index"));
-    console.log(item.parentElement.getAttribute("state"))
-    const state = item.parentElement.getAttribute("state")
-    todos[state].splice(item.parentElement.getAttribute("index"),1);
-    getAllTodos(todos,main);
-    localStorage.setItem("todos", JSON.stringify(todos));
-  };
-
-  const checkIfDone = (e, todos, main) => {
-    const item = e.target;
-    console.log(item.parentElement);
-    item.parentElement.classList.toggle("todos-done");
-    item.parentElement.children[1].classList.toggle("todos-text-done");
-    item.parentElement.children[2].classList.toggle("todos-date-done");
-  }
-
-  const checkDateLenght = (newDate) => {
-    const today = new Date();
-    const checkDate = new Date(newDate);
-    // Checks if the date happens today
-    if(checkDate.getDate() == today.getDate() && checkDate.getMonth() == today.getMonth() && checkDate.getFullYear() == today.getFullYear()){
-      console.log("state today");
-      // Change state
-      changeState('today');
-      return;
-    }
-    // Checks if date happens in the next 7 days
-    if(checkDate.getDate() <= today.getDate() + 7 && checkDate.getMonth() == today.getMonth() && checkDate.getFullYear() == today.getFullYear()){
-      console.log("state week");
-      changeState('week');
-      return;
-    }
-    // Default option is the month
-    console.log("state month");
-    changeState('month');
-    return;
   
-  }
-
-
-  const getAllTodos = (todos, main) => {
-    main.innerHTML = "";
-
-    for (const todo in todos) {
-      todos[todo].forEach((todo, i) => {
-
-        // Main container for todo
-        const todoContainer = document.createElement("div");
-        todoContainer.classList.add("todos");
-        todoContainer.setAttribute("index", i);
-        console.log(todo.state);
-        todoContainer.setAttribute("state", `${todo.state}`);
-        
-
-        // The checkbox in the todo
-        const todoCheckbox = document.createElement("input");
-        todoCheckbox.type = "checkbox";
-        todoCheckbox.classList.add("todos-input");
-        todoCheckbox.addEventListener('click', (e) => checkIfDone(e, todos, main));
-        todoContainer.appendChild(todoCheckbox);
-
-
-        // Text in the todo
-        const todoText = document.createElement("div");
-        todoText.classList.add("todos-text");
-        todoText.textContent = todo.name;
-        todoContainer.appendChild(todoText);
-
-        // The date shown in the todo
-        const todoDate = document.createElement("div");
-        todoDate.classList.add("todos-date");
-        // Format the date 
-        const dateValue = new Date(todo.date);
-        const day = format(dateValue, 'do');
-        const month = format(dateValue, 'MMM');
-        const fullDate = `${month} ${day}`;
-        todoDate.textContent = fullDate;
-        todoContainer.appendChild(todoDate);
-
-        // The edit and delete button in the todo
-        const todoEdit = document.createElement("button");
-        const todoDelete = document.createElement("button");
-        todoEdit.classList.add("todos-edit");
-        todoDelete.classList.add("todos-delete");
-        todoEdit.textContent = 'Edit';
-        todoDelete.textContent = 'Delete';
-        todoDelete.addEventListener('click', (e) => deleteToDo(e, todos, main));
-        todoContainer.appendChild(todoEdit);
-        todoContainer.appendChild(todoDelete);
-
-        // Add the todo in the main container so it's shown
-        main.appendChild(todoContainer);
-
-
-      })
+    // Shows the relevant todos for each
+  function folderChange(){
+    console.log(this.textContent.toLowerCase());
+    const folder = this.textContent.toLowerCase();
+    if(folder === 'home') {
+      toDosManager.getAllTodos(todos,main);
+    } 
+    else {
+      toDosManager.getCertainStateTodos(todos, main, folder);
     }
-    // Save todos in the localstorage
-    localStorage.setItem("todos", JSON.stringify(todos));
   };
-
-  const createToDo = (name, date) => {
-    // Get the state from function and change it in the function
-    checkDateLenght(date);
-    const state = getState();
-      return{
-        name, 
-        date, 
-        state
+  
+  // Opens the hamburger menu whne screen size is less than 540px
+  function openMenu(){
+    hamburger.classList.toggle("hamburger-active");
+    if(hamburger.classList.contains("hamburger-active")) {
+      sidebar.style.left = "50px";
+      }
+    else {
+      sidebar.style.left = "1000px";
       }
   };
+  
+  hamburger.addEventListener("click", openMenu);
+  menuItems.forEach((item)=> item.addEventListener('click', activeItem));
+  menuItems.forEach((item) => item.addEventListener('click', folderChange));
 
-  const addToDo = (e, todos, main, popUpNew) => {
-    e.preventDefault();
-    const title = document.querySelector("#make-new-title").value;
-    const date = document.querySelector("#make-new-date").value;
-    const newToDo = createToDo(title, date);
-    const state = getState();
-    console.log(state);
-    todos[state].push(newToDo);
 
-    
-    getAllTodos(todos, main);
-    
 
-    popUpNew.classList.toggle("hidden");
-  }
-  return{
-    createToDo, 
-    addToDo, 
-    getAllTodos
-  }
-})();
 
 
 // Get todos from localstorage
 const todos = JSON.parse(localStorage.getItem("todos")) || {"today": [], "week": [], "month": []};
 // Make a todo if theres none
 if(!localStorage.getItem("todos")){
-  todos.home.push(toDosManager.createToDo("hey","2021-12-12"));
+  todos.month.push(toDosManager.createToDo("Eat nuts","2023-12-12"));
+  todos.month.push(toDosManager.createToDo("Eat bigger nuts","2023-11-11"));
 }
 
 
-popCreateNewSubmitButton.addEventListener('click', e => {
-  toDosManager.addToDo(e, todos, main, popUpNew);
-  console.log("create new pressed");
-})
-
-
 toDosManager.getAllTodos(todos, main);
+
+
+
+
+
+
+
