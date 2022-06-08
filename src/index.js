@@ -11,6 +11,10 @@ const popCreateNewSubmitButton = document.querySelector(".make-new-info-containe
 const openPopCreateNewButton = document.querySelector(".sidebar-button-new");
 const popUpNewCloseButton = document.querySelector(".make-new-header-container-xButton");
 
+
+
+
+
 // The x button to close the pop screen
 popUpNewCloseButton.addEventListener('click', e => {
   formNew.reset();

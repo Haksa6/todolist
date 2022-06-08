@@ -16,21 +16,28 @@ export const toDosManager = (function (){
   const deleteToDo = (e, todos, main) => {
     const item = e.target;
     console.log(item.parentElement.getAttribute("index"));
-    console.log(item.parentElement.getAttribute("state"))
-    const state = item.parentElement.getAttribute("state")
+    console.log(item.parentElement.getAttribute("state"));
+    const state = item.parentElement.getAttribute("state");
     todos[state].splice(item.parentElement.getAttribute("index"),1);
     getAllTodos(todos,main);
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
-  const checkIfDone = (e, todos, main) => {
+  const checkIfDone = (e, todos) => {
     const item = e.target;
-    console.log(item.parentElement);
+    console.log(item.parentElement.children[0].value);
     item.parentElement.classList.toggle("todos-done");
     item.parentElement.children[1].classList.toggle("todos-text-done");
     item.parentElement.children[2].classList.toggle("todos-date-done");
+
+    const state = item.parentElement.getAttribute("state");
+    const index = item.parentElement.getAttribute("index");
+    todos[state][index].done = !todos[state][index].done
+    localStorage.setItem("todos", JSON.stringify(todos));
   }
 
+
+  // Add the todo in the right date container
   const checkDateLenght = (newDate) => {
     const today = new Date();
     const checkDate = new Date(newDate);
@@ -54,7 +61,7 @@ export const toDosManager = (function (){
   
   }
 
-
+  // Get all the todos at home page
   const getAllTodos = (todos, main) => {
     main.innerHTML = "";
 
@@ -104,7 +111,9 @@ export const toDosManager = (function (){
         todoDelete.addEventListener('click', (e) => deleteToDo(e, todos, main));
         todoContainer.appendChild(todoEdit);
         todoContainer.appendChild(todoDelete);
-
+        if(todo.done){
+          addCheck(todoContainer);
+        }
         // Add the todo in the main container so it's shown
         main.appendChild(todoContainer);
 
@@ -115,6 +124,9 @@ export const toDosManager = (function (){
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
+
+
+  // Get only certain date range todos
   const getCertainStateTodos = (todos, main, folder) => {
 
     const stateTodos = todos[folder];
@@ -141,7 +153,7 @@ export const toDosManager = (function (){
       const todoCheckbox = document.createElement("input");
       todoCheckbox.type = "checkbox";
       todoCheckbox.classList.add("todos-input");
-      todoCheckbox.addEventListener('click', (e) => checkIfDone(e, todos, main));
+      todoCheckbox.addEventListener('click', (e) => checkIfDone(e, todos));
       todoContainer.appendChild(todoCheckbox);
 
 
@@ -172,6 +184,10 @@ export const toDosManager = (function (){
       todoDelete.addEventListener('click', (e) => deleteToDo(e, todos, main));
       todoContainer.appendChild(todoEdit);
       todoContainer.appendChild(todoDelete);
+      if(todo.done){
+        addCheck(todoContainer);
+      }
+
 
       // Add the todo in the main container so it's shown
       main.appendChild(todoContainer);
@@ -182,15 +198,17 @@ export const toDosManager = (function (){
   };
 
 
-  const createToDo = (name, date) => {
-    // Get the state from function and change it in the function
-    checkDateLenght(date);
-    const state = getState();
-      return{
-        name, 
-        date, 
-        state
-      }
+  
+
+  // Checks if the todo item is done so it stays checked when page is reloaded
+  const addCheck = (todo) => {
+    todo.classList.toggle("todos-done");
+    
+    todo.children[0].checked = !todo.children[0].checked;
+    
+    todo.children[1].classList.toggle("todos-text-done");
+    todo.children[2].classList.toggle("todos-date-done");
+
   };
 
   const addToDo = (e, todos, main, popUpNew, formNew) => {
@@ -199,14 +217,28 @@ export const toDosManager = (function (){
     const date = document.querySelector("#make-new-date").value;
     const newToDo = createToDo(title, date);
     const state = getState();
-    console.log(state);
-    todos[state].push(newToDo);
-
     
+    console.log(state);
+    
+    todos[state].push(newToDo);
     getAllTodos(todos, main);
     popUpNew.classList.toggle("hidden");
     formNew.reset();
-  }
+  };
+
+
+  const createToDo = (name, date, done=false) => {
+    // Get the state from function and change it in the function
+    checkDateLenght(date);
+    const state = getState();
+      return{
+        name, 
+        date, 
+        state, 
+        done
+      }
+  };
+
   return{
     createToDo, 
     addToDo, 
@@ -217,5 +249,6 @@ export const toDosManager = (function (){
     checkIfDone,
     checkDateLenght,
     getState,
+    addCheck
   }
 })();
