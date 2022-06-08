@@ -20,8 +20,7 @@
   width: 40rem;
   background-color: $blue;
   border-radius: 5px;
-  top: -50%;
-  transition: all 0.3s ease;
+  
   box-shadow: 15px 15px rgba(0,0,0,0.3);
   &-header-container{
     background-color: $green-blue;
@@ -88,4 +87,26 @@
   }
 }
 
+.open{
+  animation: open 0.5s forwards;
+  animation-name: open;
+}
 
+
+@keyframes open {
+  0%{
+    transform: scale(0);
+  }
+  50%{
+    transform: scale(1.2);
+  }
+  70%{
+    transform: scale(0.95);
+  }
+  95%{
+    transform: scale(1.1);
+  }
+  100%{
+    transform: scale(1);
+  }
+};

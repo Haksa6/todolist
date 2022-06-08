@@ -426,9 +426,6 @@ button:active {
   width: 40rem;
   background-color: #017d7d;
   border-radius: 5px;
-  top: -50%;
-  -webkit-transition: all 0.3s ease;
-  transition: all 0.3s ease;
   -webkit-box-shadow: 15px 15px rgba(0, 0, 0, 0.3);
           box-shadow: 15px 15px rgba(0, 0, 0, 0.3);
 }
@@ -536,5 +533,58 @@ button:active {
 .make-new-info-container-button:hover {
   -webkit-box-shadow: inset 8rem 0 0 0 #55d1b6;
           box-shadow: inset 8rem 0 0 0 #55d1b6;
+}
+
+.open {
+  -webkit-animation: open 0.5s forwards;
+          animation: open 0.5s forwards;
+  -webkit-animation-name: open;
+          animation-name: open;
+}
+
+@-webkit-keyframes open {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  70% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  95% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
+}
+
+@keyframes open {
+  0% {
+    -webkit-transform: scale(0);
+            transform: scale(0);
+  }
+  50% {
+    -webkit-transform: scale(1.2);
+            transform: scale(1.2);
+  }
+  70% {
+    -webkit-transform: scale(0.95);
+            transform: scale(0.95);
+  }
+  95% {
+    -webkit-transform: scale(1.1);
+            transform: scale(1.1);
+  }
+  100% {
+    -webkit-transform: scale(1);
+            transform: scale(1);
+  }
 }
 /*# sourceMappingURL=main.css.map */
