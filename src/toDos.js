@@ -23,6 +23,40 @@ export const toDosManager = (function (){
     localStorage.setItem("todos", JSON.stringify(todos));
   };
 
+
+  // const editToDo = (e, todos, main, popUpEdit, editForm) => {
+  //   e.preventDefault();
+    
+  //   const state = item.parentElement.getAttribute("state");
+  //   const index = item.parentElement.getAttribute("index");
+
+
+
+  // };
+
+
+  // const getEditInfo = (e, todos, main) => {
+  //   const item = e.target
+  //   const state = item.parentElement.getAttribute("state");
+  //   const index = item.parentElement.getAttribute("index");
+
+  //   const popUpEdit = document.querySelector(".popup-edit");
+  //   const editForm = document.querySelector(".edit");
+  //   const openEditNewButton = document.querySelector(".todos-edit");
+    
+  //   console.log(todos[state][index].name);
+  //   editForm.innerHTML = "";
+
+  //   const title = document.createElement("input");
+  //   title.classList.add(".edit-info-container-input-title");
+  //   title.setAttribute("maxlength", "40");
+  //   title.textContent = todos[state][index].name;
+
+  // };
+
+
+
+  // Adds new styles when todo is checked
   const checkIfDone = (e, todos) => {
     const item = e.target;
     console.log(item.parentElement.children[0].value);
@@ -102,14 +136,15 @@ export const toDosManager = (function (){
         todoContainer.appendChild(todoDate);
 
         // The edit and delete button in the todo
-        const todoEdit = document.createElement("button");
+        // const todoEdit = document.createElement("button");
         const todoDelete = document.createElement("button");
-        todoEdit.classList.add("todos-edit");
+        // todoEdit.classList.add("todos-edit");
         todoDelete.classList.add("todos-delete");
-        todoEdit.textContent = 'Edit';
+        // todoEdit.textContent = 'Edit';
+        // todoEdit.addEventListener('click', (e) => getEditInfo(e, todos, main));
         todoDelete.textContent = 'Delete';
         todoDelete.addEventListener('click', (e) => deleteToDo(e, todos, main));
-        todoContainer.appendChild(todoEdit);
+        // todoContainer.appendChild(todoEdit);
         todoContainer.appendChild(todoDelete);
         if(todo.done){
           addCheck(todoContainer);
@@ -175,14 +210,15 @@ export const toDosManager = (function (){
       todoContainer.appendChild(todoDate);
 
       // The edit and delete button in the todo
-      const todoEdit = document.createElement("button");
+      // const todoEdit = document.createElement("button");
       const todoDelete = document.createElement("button");
-      todoEdit.classList.add("todos-edit");
+      // todoEdit.classList.add("todos-edit");
       todoDelete.classList.add("todos-delete");
-      todoEdit.textContent = 'Edit';
+      // todoEdit.textContent = 'Edit';
+      // todoEdit.addEventListener('click', (e) => getEditInfo(e, todos[state], main));
       todoDelete.textContent = 'Delete';
       todoDelete.addEventListener('click', (e) => deleteToDo(e, todos, main));
-      todoContainer.appendChild(todoEdit);
+      // todoContainer.appendChild(todoEdit);
       todoContainer.appendChild(todoDelete);
       if(todo.done){
         addCheck(todoContainer);
@@ -205,7 +241,6 @@ export const toDosManager = (function (){
     todo.classList.toggle("todos-done");
     
     todo.children[0].checked = !todo.children[0].checked;
-    
     todo.children[1].classList.toggle("todos-text-done");
     todo.children[2].classList.toggle("todos-date-done");
 
@@ -249,6 +284,6 @@ export const toDosManager = (function (){
     checkIfDone,
     checkDateLenght,
     getState,
-    addCheck
+    addCheck,
   }
 })();

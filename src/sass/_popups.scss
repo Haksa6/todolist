@@ -10,12 +10,10 @@
   background-color: rgba(0, 0, 0, 0.8);
 
 }
-.hidden{
-  display: none;
-}
+
 
 //pop up form to add a new one
-.make-new{
+.edit{
   height: 13rem;
   width: 40rem;
   background-color: $blue;
@@ -110,3 +108,96 @@
     transform: scale(1);
   }
 };
+
+
+.popup-edit{
+  position: fixed;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  transition: all 0.3s ease;
+  background-color: rgba(0, 0, 0, 0.8);
+
+}
+
+
+// Edit window
+.make-new{
+  height: 13rem;
+  width: 40rem;
+  background-color: $blue;
+  border-radius: 5px;
+  
+  box-shadow: 15px 15px rgba(0,0,0,0.3);
+  &-header-container{
+    background-color: $green-blue;
+    align-items: center;
+    border-radius: 5px;
+    display: flex;
+    padding: 0.2rem;
+    box-shadow: 1px 1px rgba(0,0,0,0.3);
+    //button to close the popup
+    &-xButton{
+      color: $red;
+      font-size: 2rem;
+      margin-right: 0.7rem;
+      cursor: pointer;
+      font-weight: 900;
+    }
+    &-theheader{
+      font-size: 2rem;
+      flex: auto;
+    }
+  }
+  &-info-container{
+    display: flex;
+    padding: 0.2rem;
+    flex-direction: column;
+    &-input-title{
+      background-color: transparent;
+      color: $white;
+      border: none;
+      font-size: 1.25rem;
+      border-bottom: 1px solid $white;
+      margin: 0.25rem 0rem;
+      &::placeholder{
+        color: $grey;
+      }
+      &:focus{
+        outline: none;
+      }
+    }
+    &-date-container{
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0 2.2rem 0;
+      &-para{
+        font-size: 1.25rem;
+        margin-right: 0.2rem;
+      }
+      &-input-date{
+        border-radius: 5px;
+        border: 2px solid $blue-light;
+        padding: 0.5rem;
+        margin-left: 0.7rem;
+      }
+    }
+    &-button{
+      height: 2rem;
+      width: 7rem;
+      align-self: end;
+      margin-right: 0.5rem;
+      &:hover{
+        box-shadow: inset 8rem 0 0 0 $blue-light;
+      }
+    }
+  }
+}
+
+
+.hidden{
+  display: none;
+}
